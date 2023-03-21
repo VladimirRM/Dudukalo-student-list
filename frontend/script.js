@@ -1,7 +1,13 @@
 const SERVER_URL = "http://localhost:3000";
 
-async function serverAddStudent() {
-  let response = await fetch("http://localhost:3000");
+async function serverAddStudent(obj) {
+  let response = await fetch(SERVER_URL + "/api/students", {
+    method: "POST",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify(obj),
+  });
+  let data = await response.json();
+  return data;
 }
 
 //   let listStudents = [
@@ -77,16 +83,21 @@ function render(arr) {
 
 render(listStudents);
 
-document.getElementById("add-form").addEventListener("submit", function (e) {
-  e.preventDefault();
-  let newStudentObj = {
-    name: document.getElementById("name-inp").value,
-    lastName: document.getElementById("lastname-inp").value,
-    surname: document.getElementById("surname-inp").value,
-    birthday: new Date(document.getElementById("birthday-inp").value),
-    faculty: document.getElementById("faculty-inp").value,
-    studyStart: document.getElementById("studyStart-inp").value,
-  };
-  listStudents.push(newStudentObj);
-  render(listStudents);
-});
+document
+  .getElementById("add-form")
+  .addEventListener("submit", async function (e) {
+    e.preventDefault();
+    let newStudentObj = {
+      name: document.getElementById("name-inp").value,
+      lastname: document.getElementById("lastname-inp").value,
+      surname: document.getElementById("surname-inp").value,
+      birthday: new Date(document.getElementById("birthday-inp").value),
+      faculty: document.getElementById("faculty-inp").value,
+      studyStart: document.getElementById("studyStart-inp").value,
+    };
+
+    console.log(await serverAddStudent(newStudentObj));
+
+    listStudents.push(newStudentObj);
+    render(listStudents);
+  });
