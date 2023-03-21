@@ -10,6 +10,17 @@ async function serverAddStudent(obj) {
   return data;
 }
 
+async function serverGetStudents() {
+  let response = await fetch(SERVER_URL + "/api/students", {
+    method: "GET",
+    headers: { "Content-type": "application/json" },
+  });
+  let data = await response.json();
+  return data;
+}
+
+console.log(  await serverGetStudents());
+
 //   let listStudents = [
 
 //   {
@@ -96,8 +107,9 @@ document
       studyStart: document.getElementById("studyStart-inp").value,
     };
 
-    console.log(await serverAddStudent(newStudentObj));
-
-    listStudents.push(newStudentObj);
+    let serverDataObj = await serverAddStudent(newStudentObj);
+    serverDataObj.birthday = new Date(serverDataObj.birthday);
+    listStudents.push(serverDataObj);
+    console.log(listStudents);
     render(listStudents);
   });
