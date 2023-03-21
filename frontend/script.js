@@ -1,13 +1,10 @@
-  const SERVER_URL = 'http://localhost:3000' 
-  
-  function serverAddStudent(){
-    
-  }
-  
-  
+const SERVER_URL = "http://localhost:3000";
+
+async function serverAddStudent() {
+  let response = await fetch("http://localhost:3000");
+}
+
 //   let listStudents = [
-
-
 
 //   {
 //     name: "Илья",
@@ -35,8 +32,7 @@
 //   },
 // ];
 
-
-let listStudents =[]
+let listStudents = [];
 
 function formatDate(date) {
   var dd = date.getDate();
@@ -56,13 +52,13 @@ function $getNewStudentTR(studObj) {
   const $tdFio = document.createElement("td");
   const $txBirthDay = document.createElement("td");
   const $tdFaculty = document.createElement("td");
-  const $tdStart = document.createElement("td");
+  const $tdStudyStart = document.createElement("td");
 
   $tdFio.textContent = `${studObj.lastName} ${studObj.name} ${studObj.surname}`;
   $txBirthDay.textContent = formatDate(studObj.birthday);
   $tdFaculty.textContent = studObj.faculty;
-  $tdStart.textContent = studObj.start;
-  $tr.append($tdFio, $txBirthDay, $tdFaculty, $tdStart);
+  $tdStudyStart.textContent = studObj.studyStart;
+  $tr.append($tdFio, $txBirthDay, $tdFaculty, $tdStudyStart);
   // $studTable.append($tr);
   return $tr;
 }
@@ -85,13 +81,12 @@ document.getElementById("add-form").addEventListener("submit", function (e) {
   e.preventDefault();
   let newStudentObj = {
     name: document.getElementById("name-inp").value,
-    lastName: document.getElementById("lastname").value,
-    surname: document.getElementById("surname").value,
-    birthday: new Date(document.getElementById("birthday").value),
-    faculty: document.getElementById("faculty").value,
-    start: document.getElementById("start").value,
+    lastName: document.getElementById("lastname-inp").value,
+    surname: document.getElementById("surname-inp").value,
+    birthday: new Date(document.getElementById("birthday-inp").value),
+    faculty: document.getElementById("faculty-inp").value,
+    studyStart: document.getElementById("studyStart-inp").value,
   };
   listStudents.push(newStudentObj);
-render(listStudents);
-
+  render(listStudents);
 });
