@@ -1,29 +1,42 @@
-let listStudents = [
-  {
-    name: "Илья",
-    lastName: "Иванович",
-    surname: "Олегович",
-    birthday: new Date(1997, 02, 12),
-    faculty: "Экономика",
-    start: 2010,
-  },
-  {
-    name: "Алла",
-    lastName: "Клочкова",
-    surname: " Александровна",
-    birthday: new Date(1995, 04, 05),
-    faculty: "Педагогика",
-    start: 2011,
-  },
-  {
-    name: "Александр",
-    lastName: "Чорный",
-    surname: "Альбертович",
-    birthday: new Date(2000, 02, 01),
-    faculty: "Дизайн",
-    start: 2009,
-  },
-];
+  const SERVER_URL = 'http://localhost:3000' 
+  
+  function serverAddStudent(){
+    
+  }
+  
+  
+//   let listStudents = [
+
+
+
+//   {
+//     name: "Илья",
+//     lastName: "Иванович",
+//     surname: "Олегович",
+//     birthday: new Date(1997, 02, 12),
+//     faculty: "Экономика",
+//     start: 2010,
+//   },
+//   {
+//     name: "Алла",
+//     lastName: "Клочкова",
+//     surname: " Александровна",
+//     birthday: new Date(1995, 04, 05),
+//     faculty: "Педагогика",
+//     start: 2011,
+//   },
+//   {
+//     name: "Александр",
+//     lastName: "Чорный",
+//     surname: "Альбертович",
+//     birthday: new Date(2000, 02, 01),
+//     faculty: "Дизайн",
+//     start: 2009,
+//   },
+// ];
+
+
+let listStudents =[]
 
 function formatDate(date) {
   var dd = date.getDate();
@@ -50,14 +63,14 @@ function $getNewStudentTR(studObj) {
   $tdFaculty.textContent = studObj.faculty;
   $tdStart.textContent = studObj.start;
   $tr.append($tdFio, $txBirthDay, $tdFaculty, $tdStart);
-  $studTable.append($tr);
+  // $studTable.append($tr);
   return $tr;
 }
 
 function render(arr) {
   let copyArr = [...arr];
 
-  const $studTable = document.getElementById("stud-table");
+  var $studTable = document.getElementById("stud-table");
 
   $studTable.innerHTML = "";
   for (const studObj of copyArr) {
@@ -67,3 +80,18 @@ function render(arr) {
 }
 
 render(listStudents);
+
+document.getElementById("add-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  let newStudentObj = {
+    name: document.getElementById("name-inp").value,
+    lastName: document.getElementById("lastname").value,
+    surname: document.getElementById("surname").value,
+    birthday: new Date(document.getElementById("birthday").value),
+    faculty: document.getElementById("faculty").value,
+    start: document.getElementById("start").value,
+  };
+  listStudents.push(newStudentObj);
+render(listStudents);
+
+});
