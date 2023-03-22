@@ -19,6 +19,16 @@ async function serverGetStudents() {
   return data;
 }
 
+async function serverDeleteStudent(obj) {
+  let response = await fetch(SERVER_URL + "/api/students", {
+    method: "POST",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify(obj),
+  });
+  let data = await response.json();
+  return data;
+}
+
 let serverData = await serverGetStudents();
 
 //   let listStudents = [
