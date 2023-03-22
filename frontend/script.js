@@ -19,7 +19,7 @@ async function serverGetStudents() {
   return data;
 }
 
-console.log(  await serverGetStudents());
+let serverData = await serverGetStudents();
 
 //   let listStudents = [
 
@@ -51,6 +51,10 @@ console.log(  await serverGetStudents());
 
 let listStudents = [];
 
+if (serverData !== null) {
+  listStudents = serverData;
+}
+
 function formatDate(date) {
   var dd = date.getDate();
   if (dd < 10) dd = "0" + dd;
@@ -70,12 +74,25 @@ function $getNewStudentTR(studObj) {
   const $txBirthDay = document.createElement("td");
   const $tdFaculty = document.createElement("td");
   const $tdStudyStart = document.createElement("td");
+  const $tdDelete = document.createElement("td");
+  const $tdBtnDelete = document.createElement("button");
+
+  $tdBtnDelete.classList.add("btn", "btn-danger", "w-100");
+  $tdBtnDelete.textContent = "Удалить";
 
   $tdFio.textContent = `${studObj.lastName} ${studObj.name} ${studObj.surname}`;
-  $txBirthDay.textContent = formatDate(studObj.birthday);
+  $txBirthDay.textContent = formatDate(new Date(studObj.birthday));
   $tdFaculty.textContent = studObj.faculty;
   $tdStudyStart.textContent = studObj.studyStart;
-  $tr.append($tdFio, $txBirthDay, $tdFaculty, $tdStudyStart);
+
+  ////////
+
+  $tdBtnDelete.addEventListener("click", function () {
+    console.log(studObj);
+  });
+  //////////
+  $tdDelete.append($tdBtnDelete);
+  $tr.append($tdFio, $txBirthDay, $tdFaculty, $tdStudyStart, $tdDelete);
   // $studTable.append($tr);
   return $tr;
 }
