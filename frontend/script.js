@@ -19,11 +19,9 @@ async function serverGetStudents() {
   return data;
 }
 
-async function serverDeleteStudent(obj) {
-  let response = await fetch(SERVER_URL + "/api/students", {
-    method: "POST",
-    headers: { "Content-type": "application/json" },
-    body: JSON.stringify(obj),
+async function serverDeleteStudent(id) {
+  let response = await fetch(SERVER_URL + "/api/students/" + id, {
+    method: "DELETE",
   });
   let data = await response.json();
   return data;
@@ -97,8 +95,9 @@ function $getNewStudentTR(studObj) {
 
   ////////
 
-  $tdBtnDelete.addEventListener("click", function () {
-    console.log(studObj);
+  $tdBtnDelete.addEventListener("click", async function () {
+    await serverDeleteStudent(studObj.id);
+    $tr.remove();
   });
   //////////
   $tdDelete.append($tdBtnDelete);
@@ -137,6 +136,6 @@ document
     let serverDataObj = await serverAddStudent(newStudentObj);
     serverDataObj.birthday = new Date(serverDataObj.birthday);
     listStudents.push(serverDataObj);
-    console.log(listStudents);
+    // console.log(listStudents);
     render(listStudents);
   });
